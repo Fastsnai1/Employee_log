@@ -7,13 +7,13 @@ class Worker(models.Model):
     last_name = models.CharField(max_length=200, verbose_name='Фамилия')
     surname = models.CharField(max_length=200, verbose_name='Отчество')
     slug = models.SlugField(max_length=250, unique=True, db_index=True, verbose_name='URL')
-    male_or_female = models.BooleanField(default=True, verbose_name='Пол')
     age = models.DateField()
-    pos = models.ForeignKey('Position', on_delete=models.PROTECT, verbose_name='Должность')
+    male_or_female = models.ForeignKey('Gender', on_delete=models.PROTECT, verbose_name='Пол')
     cat = models.ForeignKey('Category', on_delete=models.PROTECT, verbose_name='Категория')
+    pos = models.ForeignKey('Position', on_delete=models.PROTECT, verbose_name='Должность')
 
     def __str__(self):
-        return f'{self.last_name_name} {self.first_name}'
+        return f'{self.last_name} {self.first_name}'
 
     def get_absolute_url(self):  # ссылка на данный класс
         return reverse('worker', kwargs={'worker_slug': self.slug})
@@ -56,3 +56,18 @@ class Position(models.Model):
         verbose_name_plural = 'должности'
         ordering = ['name']
 
+
+class Gender(models.Model):
+    name = models.CharField(max_length=100, db_index=True, verbose_name='Пол')
+    slug = models.SlugField(max_length=250, unique=True, db_index=True, verbose_name='URL')
+
+    def __str__(self):
+        return self.name
+
+    def get_absolute_url(self):  # ссылка на данный класс
+        return reverse('gender', kwargs={'gen_slug': self.slug})
+
+    class Meta:
+        verbose_name = 'Пол'
+        verbose_name_plural = 'Пол'
+        ordering = ['id']

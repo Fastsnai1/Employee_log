@@ -1,0 +1,8 @@
+{% extends 'employees/base.html' %}
+
+{% block content %}
+    {% for w in workers %}
+        <p>Имя {{w.first_name}}</p>
+
+    {%endfor%}
+{% endblock %}
