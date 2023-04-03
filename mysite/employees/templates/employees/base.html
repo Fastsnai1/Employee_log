@@ -16,33 +16,27 @@
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
       <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
         <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"></use></svg>
-        <span class="fs-4">Справочник сотрудников</span>
+        <span class="fs-4">Журнал</span>
       </a>
 
       <ul class="nav nav-pills">
-        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Добавить сотрудника</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Cпециалист</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Служащий</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Рабочий</a></li>
-        <li class="nav-item"><a href="#" class="nav-link">Главная</a></li>
+        <li class="nav-item"><a href="{% url 'adduser' %}" class="nav-link active" aria-current="page">Добавить сотрудника</a></li>
+        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Добавить длжность</a></li>
+        {% for c in cats %}
+        <li class="nav-item"><a href="{% url 'show_cats' c.id %}" class="nav-link">{{ c.name }}</a></li>
+        {% endfor %}
+        <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Все сотрудники</a></li>
       </ul>
 
     </header>
 
-      <div class="list-group w-auto">
+    {% block content %}
 
-      <a href="#" class="list-group-item list-group-item-action d-flex gap-3 py-3" aria-current="true">
-        <img src="https://github.com/twbs.png" alt="twbs" width="32" height="32" class="rounded-circle flex-shrink-0">
-        <div class="d-flex gap-2 w-100 justify-content-between">
-          <div>
-            <h6 class="mb-0">Третий заголовок</h6>
-            <p class="mb-0 opacity-75">Некоторый заполнитель в абзаце.</p>
-          </div>
-          <small class="nav-link active" aria-current="page"><button type="button" class="btn btn-warning">Редактировать</button></small>
-        </div>
-      </a>
-</div>
+      {% endblock %}
+
   </div>
+
+
 
   </body>
 </html>
