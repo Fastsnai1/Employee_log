@@ -11,6 +11,7 @@
     <title>{{title}}</title>
   </head>
   <body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
     <div class="container">
 
     <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
@@ -21,12 +22,20 @@
 
       <ul class="nav nav-pills">
         <li class="nav-item"><a href="{% url 'adduser' %}" class="nav-link active" aria-current="page">Добавить сотрудника</a></li>
-        <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Добавить длжность</a></li>
-        {% for c in cats %}
-        <li class="nav-item"><a href="{% url 'show_cats' c.id %}" class="nav-link">{{ c.name }}</a></li>
-        {% endfor %}
+        <li class="nav-item"><a href="{% url 'add_position' %}" class="nav-link active" aria-current="page">Добавить должность</a></li>
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuDark" data-bs-toggle="dropdown" aria-expanded="false">
+                Категории
+            </button>
+            <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuDark">
+                {% for c in cats %}
+                <li><a class="dropdown-item" href="{% url 'show_cats' c.id %}">{{ c.name }}</a></li>
+                {% endfor %}
+              </ul>
+          </div>
         <li class="nav-item"><a href="{% url 'home' %}" class="nav-link">Все сотрудники</a></li>
       </ul>
+
 
     </header>
 

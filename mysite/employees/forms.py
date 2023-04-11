@@ -2,12 +2,38 @@ from django import forms
 from .models import *
 
 
-class AddWorkerForm(forms.Form):
-    first_name = forms.CharField(max_length=200, label='Имя', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    last_name = forms.CharField(max_length=200, label='Фамилия', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    surname = forms.CharField(max_length=200, label='Отчество', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    slug = forms.SlugField(max_length=250, label='URL', widget=forms.TextInput(attrs={'class': 'form-control'}))
-    age = forms.DateField(label='Возраст', widget=forms.DateInput())
-    male_or_female = forms.ModelChoiceField(queryset=Gender.objects.all(), label='Пол')
-    cat = forms.ModelChoiceField(queryset=Category.objects.all(), label='Категория')
-    pos = forms.ModelChoiceField(queryset=Position.objects.all(), label='Должность')
+class AddWorkerForm(forms.ModelForm):
+    class Meta:
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['cat'].empty_lable = 'Категория не выбрана'
+
+        model = Worker
+        fields = ['first_name', 'last_name', 'surname', 'slug', 'age', 'male_or_female', 'cat', 'pos']
+        widgets = {
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'surname': forms.TextInput(attrs={'class': 'form-control'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control'}),
+            'cat': forms.Select(attrs={'class': "form-select"}),
+            'pos': forms.Select(attrs={'class': "form-select"}),
+            'male_or_female': forms.Select(attrs={'class': "form-select"}),
+            'age': forms.TextInput(attrs={'class': 'form-control', 'type': 'date'}),
+        }
+
+
+class AddPositionForm(forms.ModelForm):
+    # форма связанная с моделью
+    class Meta:
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['cat'].empty_lable = 'Категория не выбрана'
+
+        model = Position
+        fields = ['name', 'cat', 'slug']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'slug': forms.TextInput(attrs={'class': 'form-control'}),
+            'cat': forms.Select(attrs={'class': "form-select"}),
+        }
+
